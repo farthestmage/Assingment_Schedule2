@@ -5,7 +5,7 @@ def process_and_send(csv_file):
     rows = read_csv(csv_file)
 
     for row in rows:
-        send_mail(row)
+        send_mail(row,csv_file,rows.index(row))
 
         # mailer.send(email)
 

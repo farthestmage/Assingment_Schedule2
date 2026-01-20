@@ -1,5 +1,8 @@
 from mailersend import MailerSendClient,EmailBuilder
 from dotenv import load_dotenv
+from calculate_tat import calculate_tat
+from write_csv import update_csv_with_tat
+from datetime import datetime
 
 load_dotenv()
 
@@ -7,7 +10,7 @@ ms = MailerSendClient()
 
 
 
-def send_mail(row):
+def send_mail(row,csv_path,row_index):
     interviewer_name = row[1]
     interviewer_email = row[2]
     candidate_name = row[3]
@@ -38,4 +41,8 @@ Regards,
     )
     
     response = ms.emails.send(email)
+    sent_time = datetime.now()
+    tat = calculate_tat(added_on, sent_time)
+    update_csv_with_tat(csv_path, row_index, tat)
+
     return response

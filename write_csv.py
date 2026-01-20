@@ -29,3 +29,20 @@ def write_csv(filename, data):
                 ]
                 writer.writerow(new_row)
 
+
+def update_csv_with_tat(csv_path, row_index, tat_value):
+    import csv
+
+    with open(csv_path, "r", newline="") as f:
+        rows = list(csv.reader(f))
+
+    # Add header if TAT doesn't exist
+    if "TAT" not in rows[0]:
+        rows[0].append("TAT")
+
+    # Append TAT to the specific row
+    rows[row_index].append(tat_value)
+
+    with open(csv_path, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerows(rows)
